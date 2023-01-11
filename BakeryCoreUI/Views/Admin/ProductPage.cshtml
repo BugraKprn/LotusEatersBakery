@@ -1,0 +1,347 @@
+﻿@{
+    Layout = "_LayoutAdmin";
+}
+<h1 class="None">Ürün Yönetimi</h1>
+<div id="gridContainer" dx-data-grid="dataGridOptions"></div>
+<script type="text/javascript">
+    var OrionApp = angular.module('OrionApp', ['dx'])
+        .controller('OrionController', function ($scope) {
+            var Url = "";
+            var productStore = new DevExpress.data.CustomStore({
+                key: "Id",
+                load: function () {
+                    return sendRequest("/getproducts");
+                },
+                insert: function (values) {
+                    return sendRequest("@Url.Action("OrionSave","Admin")", "POST", {
+                        values: JSON.stringify(values),
+                        tablo: "Product"
+                    });
+                },
+                update: function (key, values, tablo) {
+                    return sendRequest("@Url.Action("OrionSave","Admin")", "POST", {
+                        key: key,
+                        values: JSON.stringify(values),
+                        tablo: "Product"
+                    });
+                },
+                remove: function (key) {
+                    return sendRequest("@Url.Action("OrionDelete","Admin")", "POST", {
+                        key: key,
+                        tablo: "Product"
+                    });
+                }
+            });
+            $scope.refreshMode = "reshape";
+            $scope.requests = [];
+
+            $scope.dataGridOptions = {
+                bindingOptions: {
+                    "editing.refreshMode": "refreshMode"
+                },
+                dataSource: productStore,
+                repaintChangesOnly: true,
+                showColumnLines: true,
+                showRowLines: true,
+                rowAlternationEnabled: true,
+                showBorders: true,
+                filterRow: { visible: true },
+                filterPanel: { visible: true },
+                headerFilter: { visible: true },
+                allowColumnResizing: true,
+                columnAutoWidth: true,
+                width: "100%",
+                paging: {
+                    pageSize: 10
+                },
+                columnChooser: {
+                    enabled: false,
+                    mode: "dragAndDrop" // or "select"
+                },
+                pager: {
+                    showPageSizeSelector: true,
+                    allowedPageSizes: [25, 50, 75],
+                    showInfo: true
+                },
+                editing: {
+                    mode: "popup",
+                    allowUpdating: true,
+                    allowDeleting: true,
+                    useIcons: true,
+                    popup: {
+                        title: "Ürün",
+                        showTitle: true,
+                        width: "100%",
+                        height: "100%",
+                        position: {
+                            my: "top",
+                            at: "top",
+                            of: window
+                        }
+                    },
+                    form: {
+                        itemType: "group",
+                        width: "100%",
+                        height: "100%",
+                        colCount: 1,
+                        items:[
+                            {
+                                itemType: "tabbed",
+                                tabPanelOptions: {
+                                    deferRendering: false,
+                                    loop: true,
+                                    animationEnabled: true,
+                                    swipeEnabled: true
+                                },
+                                tabs:[
+                                    {
+                                        colCount: 2,
+                                        title: "Bilgiler",
+                                        items:[
+                                            { dataField: "ProductName" },
+                                            { dataField: "Price" },
+                                            { dataField: "ImageFile" },
+                                            { dataField: "Image", visible: false },
+                                            { dataField: "BigImageFile" },
+                                            { dataField: "BigImage", visible: false }
+                                        ]
+                                    },
+                                    {
+                                        colCount: 1,
+                                        title: "Açıklama",
+                                        items: [
+                                            { dataField: "Description" }]
+
+                                    },
+                                    {
+                                        colCount: 1,
+                                        title: "Alerjenler",
+                                        items: [
+                                            { dataField: "Allergen" }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                onDataErrorOccurred(e) {
+                    this.dataErrorMessage = "The server returned an error: " + `"${e.error.httpStatus} => ${e.error.message}".`;
+                },
+                onEditorPreparing: function (e) {
+
+                    if (e.parentType === "dataRow" && e.dataField === "ImageFile") {
+                        try {
+
+                            e.editorName = "dxFileUploader";
+                            e.editorOptions.uploadMode = "instantly";
+                            e.editorOptions.name = "myFile";
+                            e.editorOptions.uploadUrl = "@Url.Action("UploadFile", "Admin")";
+                            e.editorOptions.onUploaded = (args) => {
+                                var result = args.request.response;
+                                const rowIndex = e.row.rowIndex
+                                e.component.cellValue(rowIndex, "Image", result);
+                                DevExpress.ui.notify("Ürün resimi yüklendi", "success", 5000);
+                            }
+                        } catch (e) {
+
+                        }
+                    }
+                    else if (e.parentType === "dataRow" && e.dataField === "BigImageFile") {
+                        try {
+
+                            e.editorName = "dxFileUploader";
+                            e.editorOptions.uploadMode = "instantly";
+                            e.editorOptions.name = "myBigImageFile";
+                            e.editorOptions.uploadUrl = "@Url.Action("UploadBigImageFile", "Admin")";
+                            e.editorOptions.onUploaded = (args) => {
+                                var result = args.request.response;
+                                const rowIndex = e.row.rowIndex
+                                e.component.cellValue(rowIndex, "BigImage", result);
+                                DevExpress.ui.notify("Ürün büyük resimi yüklendi", "success", 5000);
+                            }
+                        } catch (e) {
+
+                        }
+                    }
+                },
+                columns: [
+                    {
+                        dataField: "Id",
+                        caption: "Kayıt No",
+                        width: 100
+                    },
+                    {
+                        dataField: "ProductName",
+                        caption: "Ürün Adı",
+                        width: 450
+                    },
+                    {
+                        dataField: "Price",
+                        caption: "Fiyat",
+                        visible: false
+                    },
+                    {
+                        dataField: "Description",
+                        caption:"Açıklama",
+                        colSpan: 4, editorType: "dxHtmlEditor",
+                        visible: false,
+                        editorOptions: {
+                            toolbar: {
+                                items: [
+                                    "undo", "redo", "separator",
+                                    {
+                                        formatName: "size",
+                                        formatValues: ["8pt", "10pt", "12pt", "14pt", "18pt", "24pt", "36pt"]
+                                    },
+                                    {
+                                        formatName: "font",
+                                        formatValues: ["Arial", "Courier New", "Georgia", "Impact", "Lucida Console", "Tahoma", "Times New Roman", "Verdana"]
+                                    },
+                                    "separator", "bold", "italic", "strike", "underline", "separator",
+                                    "alignLeft", "alignCenter", "alignRight", "alignJustify", "separator",
+                                    {
+                                        formatName: "header",
+                                        formatValues: [false, 1, 2, 3, 4, 5]
+                                    }, "separator",
+                                    "orderedList", "bulletList", "separator",
+                                    "color", "background", "separator",
+                                    "link", "image", "separator",
+                                    "clear", "codeBlock", "blockquote", "table"
+                                ]
+                            },
+                            mediaResizing: {
+                                enabled: true
+                            },
+                            height: 400
+                        }
+                    },
+                    {
+                        dataField: "Allergen",
+                        caption:"Alerjenler",
+                        colSpan: 4, editorType: "dxHtmlEditor",
+                        visible: false,
+                        editorOptions: {
+                            toolbar: {
+                                items: [
+                                    "undo", "redo", "separator",
+                                    {
+                                        formatName: "size",
+                                        formatValues: ["8pt", "10pt", "12pt", "14pt", "18pt", "24pt", "36pt"]
+                                    },
+                                    {
+                                        formatName: "font",
+                                        formatValues: ["Arial", "Courier New", "Georgia", "Impact", "Lucida Console", "Tahoma", "Times New Roman", "Verdana"]
+                                    },
+                                    "separator", "bold", "italic", "strike", "underline", "separator",
+                                    "alignLeft", "alignCenter", "alignRight", "alignJustify", "separator",
+                                    {
+                                        formatName: "header",
+                                        formatValues: [false, 1, 2, 3, 4, 5]
+                                    }, "separator",
+                                    "orderedList", "bulletList", "separator",
+                                    "color", "background", "separator",
+                                    "link", "image", "separator",
+                                    "clear", "codeBlock", "blockquote", "table"
+                                ]
+                            },
+                            mediaResizing: {
+                                enabled: true
+                            },
+                            height: 400
+                        }
+                    },
+                    {
+                        dataField: "Image",
+                        caption: "Image",
+                        visible: false
+                    },
+                    {
+                        dataField: "BigImage",
+                        caption: "BigImage",
+                        visible: false
+                    },
+                    {
+                        dataField: "ImageFile",
+                        caption: "Küçük Resim(270px*226px)",
+                        setCellValue: function (rowData, value) {
+                            rowData.Image = value[0].name;
+                            DevExpress.ui.notify(value[0].name + " başarılı bir şekilde yüklendi.", "success", 2000);
+                            //rowData.File = null;
+                        },
+                        visible: false
+                    },
+                    {
+                        dataField: "BigImageFile",
+                        caption: "Büyük Resim(525px*426px)",
+                        setCellValue: function (rowData, value) {
+                            rowData.BigImage = value[0].name;
+                            DevExpress.ui.notify(value[0].name + " başarılı bir şekilde yüklendi.", "success", 2000);
+                            //rowData.File = null;
+                        },
+                        visible: false
+                    }],
+                onToolbarPreparing: function (e) {
+                    var dataGrid = e.component;
+                    e.toolbarOptions.items.unshift(
+                        {
+                            location: "after",
+                            widget: "dxButton",
+                            options: {
+                                icon: "refresh",
+                                text: "Yenile",
+                                onClick: function () {
+                                    dataGrid.refresh();
+                                }
+                            }
+                        },
+                        {
+                            location: "after",
+                            widget: "dxButton",
+                            options: {
+                                icon: "add",
+                                text: "Ekle",
+                                onClick: function () {
+                                    dataGrid.addRow();
+                                }
+                            }
+                        }
+                    );
+                },
+
+            };
+
+            $scope.buttonOptions = {
+                text: "Clear",
+                onClick: function () {
+                    $scope.requests = [];
+                }
+            };
+
+
+            function sendRequest(url, method, data) {
+                var d = $.Deferred();
+
+                method = method || "GET";
+
+                //logRequest(method, url, data);
+
+                $.ajax(url, {
+                    method: method || "GET",
+                    data: data,
+                    cache: false,
+                    xhrFields: { withCredentials: true }
+                }).done(function (result) {
+                    d.resolve(method === "GET" ? result.Data : result.Data);
+                }).fail(function (xhr) {
+                    d.reject(xhr.responseJSON ? xhr.responseJSON.Message : xhr.statusText);
+                });
+
+                return d.promise();
+            }
+        });
+
+
+    DevExpress.localization.locale(navigator.language || navigator.browserLanguage);
+
+</script>

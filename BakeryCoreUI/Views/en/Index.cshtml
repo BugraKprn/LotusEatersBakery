@@ -1,0 +1,44 @@
+﻿@using Bakery.Library.Entity
+@using Bakery.Library.Helpers;
+@model List<Product>
+@{
+    ViewData["Title"] = "Home";
+}
+
+<!--================End Main Header Area =================-->
+<section class="banner_area">
+    <div class="container">
+        <div class="banner_text">
+            <h3>Shop</h3>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/">Shop</a></li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!--================End Main Header Area =================-->
+
+<!--================Blog Main Area =================-->
+<section class="our_cakes_area p_100">
+    <div class="container">
+        <div class="cake_feature_row row">
+            @foreach (var product in Model)
+            {
+                <div class="col-lg-3 col-md-4 col-6">
+                    <div class="cake_feature_item">
+                        <div class="cake_img">
+                            <img src="@Url.Content("~/StaticFiles")/@product.Image" style="width: 270px; height: 226px;" alt="">
+                        </div>
+                        <div class="cake_text">
+                            <h4 style="font-size: 18px;">chf @(String.Format("{0:N}", product.Price))</h4>
+                            <h3>@product.ProductName</h3>
+                            <a class="pest_btn" href="@Url.Action("productdetail","en")/@Url.FriendlyUrl(product.ProductName)/@product.Id">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<!--================End Blog Main Area =================-->

@@ -1,0 +1,36 @@
+2022-12-01 00:01:25.4210 Info Message Template Auto Format enabled
+2022-12-01 00:01:25.4482 Info Loading assembly: NLog.Web.AspNetCore
+2022-12-01 00:01:25.8239 Info Adding target FileTarget(Name=allfile)
+2022-12-01 00:01:25.8239 Info Adding target FileTarget(Name=ownFile-web)
+2022-12-01 00:01:25.8681 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=45, FilePath=C:\AktifProjeler\bakery\BakeryCoreUI\bin\Debug\net6.0\nlog.config
+2022-12-01 00:01:29.2787 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=45, FilePath=C:\AktifProjeler\bakery\BakeryCoreUI\bin\Debug\net6.0\nlog.config
+2022-12-02 17:22:19.6567 Info Message Template Auto Format enabled
+2022-12-02 17:22:19.6798 Info Loading assembly: NLog.Web.AspNetCore
+2022-12-02 17:22:19.8223 Info Adding target FileTarget(Name=allfile)
+2022-12-02 17:22:19.8253 Info Adding target FileTarget(Name=ownFile-web)
+2022-12-02 17:22:19.8646 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=45, FilePath=C:\SendBox\bakery\BakeryCoreUI\bin\Debug\net6.0\nlog.config
+2022-12-02 17:22:22.9783 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=45, FilePath=C:\SendBox\bakery\BakeryCoreUI\bin\Debug\net6.0\nlog.config
+2022-12-02 17:22:37.0083 Info Message Template Auto Format enabled
+2022-12-02 17:22:37.0210 Info Loading assembly: NLog.Web.AspNetCore
+2022-12-02 17:22:37.1244 Info Adding target FileTarget(Name=allfile)
+2022-12-02 17:22:37.1244 Info Adding target FileTarget(Name=ownFile-web)
+2022-12-02 17:22:37.1758 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=45, FilePath=C:\SendBox\bakery\BakeryCoreUI\bin\Debug\net6.0\nlog.config
+2022-12-02 17:22:38.5453 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=45, FilePath=C:\SendBox\bakery\BakeryCoreUI\bin\Debug\net6.0\nlog.config
+2022-12-02 17:22:48.8623 Info Message Template Auto Format enabled
+2022-12-02 17:22:48.8721 Info Loading assembly: NLog.Web.AspNetCore
+2022-12-02 17:22:48.9601 Info Adding target FileTarget(Name=allfile)
+2022-12-02 17:22:48.9601 Info Adding target FileTarget(Name=ownFile-web)
+2022-12-02 17:22:49.0056 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=45, FilePath=C:\SendBox\bakery\BakeryCoreUI\bin\Debug\net6.0\nlog.config
+2022-12-02 17:22:50.3920 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=45, FilePath=C:\SendBox\bakery\BakeryCoreUI\bin\Debug\net6.0\nlog.config
+2022-12-20 20:15:07.1618 Info Message Template Auto Format enabled
+2022-12-20 20:15:07.1843 Info Loading assembly: NLog.Web.AspNetCore
+2022-12-20 20:15:07.3404 Info Adding target FileTarget(Name=allfile)
+2022-12-20 20:15:07.3404 Info Adding target FileTarget(Name=ownFile-web)
+2022-12-20 20:15:07.3871 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=45, FilePath=C:\SendBox\bakery\BakeryCoreUI\bin\Debug\net6.0\nlog.config
+2022-12-20 20:15:11.5960 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=45, FilePath=C:\SendBox\bakery\BakeryCoreUI\bin\Debug\net6.0\nlog.config
+2023-01-04 15:44:24.6560 Info Message Template Auto Format enabled
+2023-01-04 15:44:24.6745 Info Loading assembly: NLog.Web.AspNetCore
+2023-01-04 15:44:24.7362 Info Adding target FileTarget(Name=allfile)
+2023-01-04 15:44:24.7362 Info Adding target FileTarget(Name=ownFile-web)
+2023-01-04 15:44:24.7663 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=45, FilePath=C:\SendBox\bakery\BakeryCoreUI\bin\Debug\net6.0\nlog.config
+2023-01-04 15:44:28.0533 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=45, FilePath=C:\SendBox\bakery\BakeryCoreUI\bin\Debug\net6.0\nlog.config

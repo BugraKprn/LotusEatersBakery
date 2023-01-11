@@ -1,0 +1,74 @@
+﻿@{
+    Layout = null;
+}
+<html>
+<head>
+    <link rel="icon" href="~/img/fav-icon.png" type="image/x-icon" />
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Login Page</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <style>
+        body {
+            background: linear-gradient(to right, #ffc3a0, #ffdde1);
+        }
+
+        .btn-login {
+            font-size: 0.9rem;
+            letter-spacing: 0.05rem;
+            padding: 0.75rem 1rem;
+        }
+    </style>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                <div class="card border-0 shadow rounded-3 my-5">
+                    <div class="card-body p-4 p-sm-5">
+                        <h5 class="card-title text-center mb-5 fw-light fs-5">Sign In</h5>
+                        <form id="myForm">
+                            @Html.AntiForgeryToken()
+                            <div class="form-floating mb-3">
+                                <label for="floatingInput">Email address</label>
+                                <input type="email" class="form-control" id="UserName" name="UserName" placeholder="name@example.com">
+                            </div>
+                            <div class="form-floating mb-3">
+                                <label for="floatingPassword">Password</label>
+                                <input type="password" class="form-control" id="Password" name="Password" placeholder="Password">
+                            </div>
+                            <div class="d-grid">
+                                <button class="btn btn-primary btn-login text-uppercase fw-bold" type="button" onclick="GirisYap()">Sign in</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function GirisYap() {
+            
+            let data=$("#myForm").serialize();
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "/girisyap",
+                data:data,
+                success: function (result) {
+                    if (result.Success) {
+                        window.location.href = "@Url.Action("Index","Admin")";
+                    }
+                    else {
+                        alert(result.ErrorMessage);
+                    }
+
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>

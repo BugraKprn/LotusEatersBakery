@@ -1,0 +1,60 @@
+﻿@model BakeryCoreUI.ViewComponents.HeaderDto
+<!--================Main Header Area =================-->
+<header class="main_header_area">
+    <div class="top_header_area row m0">
+        <div class="container">
+            <div class="float-left">
+                <a href="#"><i class="fa fa-phone" aria-hidden="true"></i>@Model.SiteSetting.Phone</a>
+                <a href="mailto: @Model.SiteSetting.Mail"><i class="fa fa-envelope-o" aria-hidden="true"></i> @Model.SiteSetting.Mail</a>
+            </div>
+            <div class="float-right">
+                <ul class="h_social list_style">
+                    @if (!String.IsNullOrEmpty(Model.SiteSetting.Instagram))
+                    {
+                        <li><a href="@Model.SiteSetting.Instagram"><i class="fa fa-instagram"></i></a></li>
+                    }
+                    @if (!String.IsNullOrEmpty(Model.SiteSetting.Facebook))
+                    {
+                        <li><a href="@Model.SiteSetting.Facebook"><i class="fa fa-facebook"></i></a></li>
+                    }
+                    @if (!String.IsNullOrEmpty(Model.SiteSetting.Twitter))
+                    {
+                        <li><a href="@Model.SiteSetting.Twitter"><i class="fa fa-twitter"></i></a></li>
+                    }
+                    @if (!String.IsNullOrEmpty(Model.SiteSetting.GooglePlus))
+                    {
+                        <li><a href="@Model.SiteSetting.GooglePlus"><i class="fa fa-google-plus"></i></a></li>
+                    }
+                    @if (!String.IsNullOrEmpty(Model.SiteSetting.Linkedin))
+                    {
+                        <li><a href="@Model.SiteSetting.Linkedin"><i class="fa fa-linkedin"></i></a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="main_menu_area">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#">
+                    <img src="~/../StaticFiles/@Model.SiteSetting.Logo" alt="">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="my_toggle_menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li><a href="/">Shop</a></li>
+                        <li><a href="/en/About">About</a></li>
+                        <li><a href="/en/Contact">Contact</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+<!--================End Main Header Area =================-->

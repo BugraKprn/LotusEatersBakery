@@ -1,0 +1,141 @@
+﻿@model BakeryCoreUI.ViewComponents.FooterDto
+<!--================Newsletter Area =================-->
+@if (Model.SiteSetting.IsMailListShow == true)
+{
+    <section class="newsletter_area">
+        <form id="myContactForm">
+            @Html.AntiForgeryToken()
+            <div class="container">
+                <div class="row newsletter_inner">
+                    <div class="col-lg-6">
+                        <div class="news_left_text">
+                            <h4>Join our Newsletter list to get all the latest offers, discounts and other benefits</h4>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="newsletter_form">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="Mail" placeholder="Enter your email address" name="Mail">
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-outline-secondary" onclick="submitMailForm()">Subscribe Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+}
+else
+{
+    <div></div>
+}
+<!--================End Newsletter Area =================-->
+<!--================Footer Area =================-->
+<footer class="footer_area">
+    <div class="footer_widgets">
+        <div class="container">
+            <div class="row footer_wd_inner">
+                <div class="col-lg-3 col-6">
+                    <aside class="f_widget f_about_widget">
+                        <img src="@Url.Content("~/StaticFiles")/@Model.SiteSetting.FooterLogo" alt="@Model.SiteSetting.CompanyName">
+                        <p>@Html.Raw(@Model.SiteSetting.ShortDescription)</p>
+                        <ul class="nav">
+                            @if (!String.IsNullOrEmpty(Model.SiteSetting.Instagram))
+                            {
+                                <li><a href="@Model.SiteSetting.Instagram"><i class="fa fa-instagram"></i></a></li>
+                            }
+                            @if (!String.IsNullOrEmpty(Model.SiteSetting.Facebook))
+                            {
+                                <li><a href="@Model.SiteSetting.Facebook"><i class="fa fa-facebook"></i></a></li>
+                            }
+                            @if (!String.IsNullOrEmpty(Model.SiteSetting.Linkedin))
+                            {
+                                <li><a href="@Model.SiteSetting.Linkedin"><i class="fa fa-linkedin"></i></a></li>
+                            }
+                            @if (!String.IsNullOrEmpty(Model.SiteSetting.Twitter))
+                            {
+                                <li><a href="@Model.SiteSetting.Twitter"><i class="fa fa-twitter"></i></a></li>
+                            }
+                            @if (!String.IsNullOrEmpty(Model.SiteSetting.GooglePlus))
+                            {
+                                <li><a href="@Model.SiteSetting.GooglePlus"><i class="fa fa-google-plus"></i></a></li>
+                            }
+                        </ul>
+                    </aside>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <aside class="f_widget f_link_widget">
+                        <div class="f_title">
+                            <h3>Quick links</h3>
+                        </div>
+                        <ul class="list_style">
+                            @foreach (var item in Model.FooterLink)
+                            {
+                                <li><a href="@item.Url">@item.DisplayName</a></li>
+                            }
+                        </ul>
+                    </aside>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <aside class="f_widget f_link_widget">
+                        <div class="f_title">
+                            <h3>Work Times</h3>
+                        </div>
+                        <ul class="list_style">
+                            @Html.Raw(@Model.SiteSetting.WorkTime)
+                        </ul>
+                    </aside>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <aside class="f_widget f_contact_widget">
+                        <div class="f_title">
+                            <h3>Contact Info</h3>
+                        </div>
+                        <h4>@Model.SiteSetting.Phone</h4>
+                        <p>@Model.SiteSetting.CompanyName <br />@Html.Raw(@Model.SiteSetting.Address)</p>
+                        <h5>@Model.SiteSetting.Mail</h5>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer_copyright">
+        <div class="container">
+            <div class="copyright_inner">
+                <div class="float-left">
+                    <h5>Copyright © All right reserved. @DateTime.Now.Year.ToString()</h5>
+                </div>
+                <div class="float-right">
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!--================End Footer Area =================-->
+
+<script type="text/javascript">
+    function submitMailForm() {
+        var data = $("#myContactForm").serialize();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("SubscribeMail","en")',
+            dataType: 'json', // when we use .serialize() this generates the data in query string format. this needs the default contentType (default content type is: contentType: 'application/x-www-form-urlencoded; charset=UTF-8') so it is optional, you can remove it
+            data: data,
+            success: function (result) {
+                if (result.Success) {
+                    alert(result.Message);
+                    window.location.href = "@Url.Action("Index","en")";
+                }
+                else {
+                    alert(result.ErrorMessage);
+                }
+            },
+            error: function () {
+                alert("Suncuda geçici bir hata oluştu");
+            }
+        })
+    }
+
+</script>

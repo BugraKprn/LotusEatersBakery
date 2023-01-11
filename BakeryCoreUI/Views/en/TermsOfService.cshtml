@@ -1,0 +1,31 @@
+﻿@model Bakery.Library.Entity.Setting
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--================End Main Header Area =================-->
+<section class="banner_area">
+    <div class="container">
+        <div class="banner_text">
+            <h3>Terms Of Service</h3>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="#">Terms Of Service</a></li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!--================End Main Header Area =================-->
+
+<!--================Our Bakery Area =================-->
+<section class="our_bakery_area p_100">
+    <div class="container">
+        <div class="our_bakery_text">
+            <h2>Terms Of Service</h2>
+        </div>
+        <div>
+            @Html.Raw(@Model.Terms)
+        </div>
+    </div>
+</section>
+<!--================End Our Bakery Area =================-->
